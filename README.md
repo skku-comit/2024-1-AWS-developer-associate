@@ -3,8 +3,8 @@
 ## Members
 
 - [박지환](https://github.com/aptheparker) (스터디 리더)
-- [오성현](https://github.com/HenryOSH)
-- [박소정](https://github.com/qkrthwjd)
+- [김동한](https://github.com/pendant-k)
+- [홍권](https://github.com/gwonhong)
 
 ## Study Schedule
 - 1주차: 
@@ -21,5 +21,5 @@
 - [Ultimate AWS Certified Developer Associate 2024 NEW DVA-C02](https://www.udemy.com/share/101WgC3@htHqFfYBfVBcDYA8zfB0IIntjwtVntJ19xRjWHa29fAbwrVi5kZnp3kqdhjL2j4ixA==/)
   <details>
   <summary>Sections</summary>
-
+  1. Introduction<br>
   </details>
