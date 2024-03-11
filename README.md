@@ -66,3 +66,9 @@
   27. Security: KMS, Encryption SDK, SSM Parameter Store, IAM & STS<br>
   28. Other Services<br>
   </details>
+
+## TODO
+
+- [ ] 목표 종료일 정하기.
+- [ ] 회의 시간 정하기.
+- [ ] 발표자 선정 방법 정하기.
