@@ -28,3 +28,22 @@
   - action
   - resource
   - condition
+
+### Defense Mechanisms
+
+#### Password Policy
+
+- min length
+- require specific char types
+- allow IAM change their own pw
+- require to change pw after some time
+- prevent pw re-use
+
+### Multi Factor Authentication (MFA)
+
+- want to protect 'at least' Root Accounts
+- MFA = pw + security device you own
+  - Google Authenticator
+  - Authy
+  - physical security key
+  
