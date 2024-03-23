@@ -39,7 +39,7 @@
 
 - Version
 - Id
-- Satement
+- Statement
   - Sid
   - Effect (allow, deny)
   - principal: applied to the account or user or role
