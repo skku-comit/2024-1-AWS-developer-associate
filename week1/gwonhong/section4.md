@@ -64,3 +64,25 @@
   - Google Authenticator
   - Authy
   - physical security key
+
+### Roles
+
+- permissions for AWS services instead of user!
+- EC2 Instance - IAM Role - AWS services
+
+### IAM Security (monitoring?) Tools
+
+1. IAM Credentials Report (account-level): report of all accounts
+2. IAM Access Advisor (per-user-level): shows all permissions granted to a specific user, and when last accessed
+
+### IAM best practices
+
+- do not use root account except for intial setup!
+- one physical user = one AWS user
+- assign permissions to groups, and assign users to groups, not directly to users.
+- create strong password policy
+- enforce MFA
+- use Roles to grant permissions for AWS services
+- use Access Keys for CLI or SDK
+- audit permissions of your account using IAM credentials report & access advisor
+- Never share IAM users & access keys
