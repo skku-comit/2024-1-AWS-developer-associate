@@ -32,7 +32,7 @@
 
 ### Policies inheritance
 
-- group에 적용된 policy는은 그 그룹에 속한 유저들에게도 상속됨
+- group에 적용된 policy는 그 그룹에 속한 유저들에게도 상속됨
 - user에게 직접 **inline** policy 또한 부여 가능
 
 ### Policies (JSON) structure
@@ -86,3 +86,15 @@
 - use Access Keys for CLI or SDK
 - audit permissions of your account using IAM credentials report & access advisor
 - Never share IAM users & access keys
+
+### Shared Responsibility Model for IAM
+
+1. AWS: take care of infrastructure
+  - Infrastructure
+  - Configuration and vulnerability analysis
+  - Compliance validation (규정 준수 검증)
+2. Me: take care of how to use it (infrastructure)
+  - Users, Groups, Roles, Policies management and monitoring
+  - security of all accounts (MFA, access key rotation)
+  - permission management
+  - analyze access patterns & review permissions
