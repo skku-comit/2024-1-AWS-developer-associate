@@ -69,3 +69,44 @@
 - class `I`, `D`, ...
 
 #### `ec2instances.info`
+
+## Security Groups
+
+### overview
+
+- control how traffic is allowed into or out of our EC2 instances
+- only 'allow' rules
+- security groups can reference by IP or by security group
+
+### deeper dive
+
+- act as "firewall"
+- regulate
+    - access to ports
+    - authroized IP ranges
+    - control of inbound(between instances) and outbound(instance - internet) network
+
+### Good to know
+
+- can be attached to multiple instances
+- locked down to a region/VPC combination
+- live 'outside' EC2: even if traffic is blocked, EC2 won't notice it
+- good to maintain one separate security group for SSH access
+- **if application is not accessible (time out) - security group issue** (most common case)
+- if application gives 'connection refused' - then application error or not launched
+- all inbound: blocked by default
+- all outbound: allowed by default
+
+### referencing other security groups
+
+- for example, `security group 1` has rule `inbound: authorize security group 1`
+- by this, instances within `security group 1` can communicate to each other!
+
+### classic ports
+
+- 22: SSH
+- 21: FTP - upload files
+- 22: SFTP - upload files using SSH
+- 80: HTTP
+- 443: HTTPS
+- 3389: RDP - log into a Windows instance
