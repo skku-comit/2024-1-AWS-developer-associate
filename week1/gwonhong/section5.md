@@ -34,8 +34,38 @@
     - download files, ...
 - runs with root user (sudo)
 
-### EC2 instance types: example
+### EC2 instance types
+
+#### example
 
 - t2.micro: 1 cpu, 1GB mem, EBS-only storage, network performance: low, ...
 - t2.xlarge: 4cpu, 16GB mem, ...
 
+#### overview
+
+- <https://aws.amazon.com/ec2/instance-types/>
+- naming convention: `m5.2xlarge`
+    - m: instance class
+    - 5: generation
+    - 2xlarge: size within the instance class
+
+#### General Purpose
+
+- balance between: compute, memory, networking
+
+#### Compute Optimized
+
+- great for: batch processing workloads, machine learning, dedicated gaming servers, ...
+- class `C`(Compute)
+
+#### Memory Optimized
+
+- great for: high performance, in-memory databases, distributed cache stores, real-time processing of big unstructured data, ...
+- class `R`(RAM), `X`, `Z`, ...
+
+#### Storage Optimized
+
+- great for: SQL, noSQL db, data warehousing applications, distributed file systems, ...
+- class `I`, `D`, ...
+
+#### `ec2instances.info`
