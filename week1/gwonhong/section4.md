@@ -98,3 +98,9 @@
   - security of all accounts (MFA, access key rotation)
   - permission management
   - analyze access patterns & review permissions
+
+### Account vs User
+
+- 로그인할 때 account ID (또는 alias), user name, password 이렇게 세 가지를 입력해야 한다. 단 `https://{account ID or alias}.signin.aws.amazon.com/console`와 같은 주소로 로그인을 시도하면, account ID는 자동으로 채워짐을 알 수 있다.
+- (내피셜) account ID란, root account의 ID를 의미하며, user는 그 root account에 딸려있는 관계인 것이다.
+- [AWS Organizations terminology and concepts](https://docs.aws.amazon.com/organizations/latest/userguide/orgs_getting-started_concepts.html) 참고할만한 링크 같아서 달아뒀다.
