@@ -110,3 +110,32 @@
 - 80: HTTP
 - 443: HTTPS
 - 3389: RDP - log into a Windows instance
+
+### CLI
+
+#### connect via SSH
+
+- way to connect to server for maintanence using CLI
+- `ssh -i {security-key-file-path} ec2-user@{public-ip-address-of-the-ec2-instance}`
+- `ec2-user`가 해당 ec2 instance의 default user이다. IAM user랑은 아예 별개이다.
+
+#### connect via EC2 Instance Connect
+
+- AWS web console에서 바로 EC2 Instance와 연결된 terminal을 띄워줌. 
+- 목록에서 연결을 원하는 instance 클릭 - (우측 상단)connect - EC2 Instance Connect - user name은 (Amazon Linux의 경우)기본적으로 `ec2-user`
+- 결국 SSH를 이용하는 것으로, SSH port (22번)을 허용하지 않으면 이것도 작동하지 않으므로 주의!
+
+#### tips
+
+- never enter access key (with `aws configure`) of (admin) user to ec2 instance! - ec2 instance에 접근 가능한 모든 유저에게 해당 (admin) 유저의 권한이 오픈 되기 때문.
+- 대신,(필요하다면) 'IAM role'을 instance에 부여해서 해당 instance에게 직접 권한을 부여하기!
+
+### Purchasing Options
+
+1. On-Demand: per second
+2. Reserved: 1, 3 years - as the name says!
+3. Saving Plans: 1, 3 years - discount for specific amount of usage per month for specific duration, beyond is charged as on-demand
+4. Spot Instances: most cheapest, short, less reliable - suitable for distributed workloads
+5. Dedicated Hosts: reserve entire physical server - most expensive, useful for using server-bound SW licenses
+6. Dedicated Instances: no other customers will share your HW (reserve specific HW)
+7. Capacity Reservation: reserve **On-Demand** instances capacity in a 'specific AZ(Availability Zone)' for any duration - suitable for short-term, uninterrupted workloads that needs to be in specific AZ
