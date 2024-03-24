@@ -78,7 +78,7 @@
 
 ### IAM best practices
 
-- do not use root account except for intial setup!
+- do not use root account except for initial setup!
 - one physical user = one AWS user
 - assign permissions to groups, and assign users to groups, not directly to users.
 - create strong password policy
