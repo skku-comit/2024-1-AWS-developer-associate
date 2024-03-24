@@ -148,3 +148,24 @@
     - standard: multi-AZ, great for production
     - one zone: one-AZ, great for development, backup enabled by default, compatible with IA
 - over 90% cost savings!
+
+## EBS vs EFS
+
+### EBS
+
+- can be attached to one instance (except io1/io2)
+- locked to one AZ
+- to migrate across AZ, need to take snapshot and restore to another AZ
+- root EBS volumes of instances: terminate when EC2 is terminated (by default)
+
+### EFS
+
+- can mount 100s of instances *across AZ*
+- EFS share website files (WordPress)
+- Only Linux Instances
+- higher price than EBS
+- can leverage EFS-IA(Infrequent Access) for cost savings
+
+## 기억할 내용
+
+- EFS vs EBS vs local instance store 비교!
