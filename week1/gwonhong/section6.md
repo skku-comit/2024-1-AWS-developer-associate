@@ -125,3 +125,26 @@
 - Encryption at rest using KMS
 - POSIX file system that has a standard file API
 - scales automatically, pay-per-use, no capacity planning!
+
+### Performance
+
+- EFS Scale
+    - 1000s of concurrent NFS clients, 10GB+/s throughput
+    - grow to Petabyte-scale automatically
+- Performance Mode (set at EFS creation time)
+    1. General Purpose (default): latency-sensitive use cases (web server, CMS, ...)
+    2. Max I/O: higher latency, throughput, highly parallel (big data, media processing)
+- Throughput Mode
+    1. Bursting: 1TB = 50MiB/s + burst of up to 100MiB/s
+    2. Provisioned: set throughput regardless of storage size. ex: 1 GiB/s for 1TB storage
+    3. Elastic: automatically scales throughput up or down based on workloads - up to 3GiB/s reads, 1GiB/s writes
+
+### Storage Classes
+
+- Storage Tiers (lifecycle management feature - move file from standard tier to IA tier after N days)
+    - standard: for frequently accessed files
+    - infrequent access (EFS-IA): cost to retrieve files, but lower price
+- Availability and durability
+    - standard: multi-AZ, great for production
+    - one zone: one-AZ, great for development, backup enabled by default, compatible with IA
+- over 90% cost savings!
