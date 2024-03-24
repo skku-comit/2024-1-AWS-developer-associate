@@ -39,6 +39,51 @@
     - Force full initialization of snapshot to have no latency on the first use
     - expensive!
 
+### EBS Volume Types
+
+- 6 types: differs by size, throughput, IOPS(I/O Ops Per Sec)
+- **Only gp2/gp3, io1/io2 block express can be used as boot volumes**
+
+#### General Purpose SSD(gp2/gp3)
+
+- cost effective, low-latency
+- gp3: can set volume size, throughput, IOPS independently
+- gp2: **volume size and IOPS are linked**
+
+#### Provisioned IOPS (PIOPS) SSD (io1/io2)
+
+- critical business applications with sustained IOPS performance, or **> 16,000 IOPS required**
+- great for **DB workloads**
+- io1
+    - 4GiB - 16TiB
+    - max 64000 PIOPS for Nitro EC2 instances, 32000 for others
+    - can increase PIOPS independently from storage size
+- io2
+    - 4GiB - 64TiB
+    - sub-ms latency
+    - max 256000 with IOPS:GiB ratio of 1000:1 (PIOS, storage size are linked)
+- support EBS multi-attach!
+
+#### HDD
+
+- cannot be a boot volume
+- 125GiB - 16TiB
+- st1 (Throughput Optimized)
+    - Big Data, Log Processing, Data Warehouses
+    - Max throughput 500MiB/s, IOPS 500
+- sc1 (cold HDD)
+    - lowest cost
+    - Max throughput 250MiB/s, IOPS 250
+
+### EBS Multi-Attach - io1/io2 only
+
+- Attach same EBS volume to multiple EC2 instances *in the same AZ*
+- each instance has full read & write permissions
+- use case:
+    - higher application availability in clustered Linux applications (ex: Teradata)
+    - applications must manage concurrent write operations
+- *Up to **16** EC2 instances at a time*
+
 ## AMI
 
 - AMI = Amazon Machine Image
@@ -67,3 +112,16 @@
 - good for buffer / cache / temporary content
 - risk of data loss if HW fails
 - backups & replications is your responsibility
+
+## Amazon EFS - Elastic File System
+
+- Managed NFS (Network File System) that can be mounted on many EC2
+- EFS works with EC2 instances in **multi-AZ**
+- Highly available, scalable, expensive, pay per use
+- use cases: content management, web serving, data sharing, Wordpress
+- use NFSv4.1 protocol internally
+- use 'security group' to control access to EFS
+- **compatible with Linux based AMI, not Windows**
+- Encryption at rest using KMS
+- POSIX file system that has a standard file API
+- scales automatically, pay-per-use, no capacity planning!
