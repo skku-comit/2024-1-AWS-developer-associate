@@ -49,6 +49,7 @@
 - cost effective, low-latency
 - gp3: can set volume size, throughput, IOPS independently
 - gp2: **volume size and IOPS are linked**
+- TODO: need to check exact size and IOPS limit
 
 #### Provisioned IOPS (PIOPS) SSD (io1/io2)
 
@@ -90,7 +91,7 @@
 - customization of an EC2 instance
     - you can add your own SW, config, OS, monitoring, ...
     - faster boot / config time since all your SW is **pre-packaged**
-- you can build AMI for a **specific region** (and can be copied across regions)
+- you can build AMI for a **specific region(not AZ)** (and can be copied across regions)
 - you can launch EC2 instances from a public AMI, or your own custom AMI
 - you can buy or sell AMI at AWS marketplace
 
@@ -169,3 +170,4 @@
 ## 기억할 내용
 
 - EFS vs EBS vs local instance store 비교!
+- region-scope vs AZ-scope
