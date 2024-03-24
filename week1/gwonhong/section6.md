@@ -38,3 +38,32 @@
 - Fast Snapshot Restore
     - Force full initialization of snapshot to have no latency on the first use
     - expensive!
+
+## AMI
+
+- AMI = Amazon Machine Image
+- customization of an EC2 instance
+    - you can add your own SW, config, OS, monitoring, ...
+    - faster boot / config time since all your SW is **pre-packaged**
+- you can build AMI for a **specific region** (and can be copied across regions)
+- you can launch EC2 instances from a public AMI, or your own custom AMI
+- you can buy or sell AMI at AWS marketplace
+
+### how to make AMI from an EC2 instance
+
+1. Start EC2 instance, customize it
+2. Stop the instance, and build an AMI (this will also create EBS snapshots)
+
+### 그럼 AMI와 snapshot의 차이가 무엇일까?
+
+- 우선 AMI의 usgae 및 장점: 특정 패키지의 설치를 user script에 작성하는 대신, AMI로 pre-package하여 instance의 boot 속도를 빠르게 할 수 있음!
+- 그냥 EBS snapshot을 찍고 매번 통으로 restore하는 것이랑 어떤 차이가 있을까?: [stackoverflow](https://stackoverflow.com/a/54157492)
+
+## Local EC2 Instance Store
+
+- EBS volumes are 'network drives' == good but still 'limited' performance
+- EC2 Instance Store: high-performance HW disk
+- Better I/O, but *ephemeral*: lose if they're stopped
+- good for buffer / cache / temporary content
+- risk of data loss if HW fails
+- backups & replications is your responsibility
