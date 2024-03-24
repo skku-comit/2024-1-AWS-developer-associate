@@ -10,7 +10,8 @@
 
 1. AWS CLI 설치
 2. terminal에 `aws configure` 입력
-3. 발급받은 access key id, secret 입력
+3. 발급받은 user access key id, secret 입력
+4. 이후 `aws ~` 를 통해 입력한 access key의 user 권한으로 여러 aws service 제어 가능
 
 ### AWS CloudShell
 
