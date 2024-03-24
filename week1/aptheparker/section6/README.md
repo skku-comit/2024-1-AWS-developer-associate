@@ -48,3 +48,35 @@
   - hdd (Hard Disk Drive)
     - Cannot be a boot volume.
     - Big data, data warehousing, log processing.
+
+# EBS Multi-Attach
+
+- Allows a single EBS volume to be attached to multiple EC2 instances.
+- For high-availability and clustering applications.
+- Up to 16 EC2 instances.
+
+# EFS (Elastic File System)
+
+- Managed NFS (Network File System).
+- Can be mounted on many EC2 instances, scalable, pay-per-use, and multi-AZ.
+- Performance Mode:
+  - General Purpose: Latency-sensitive use cases.
+  - Max I/O: Higher latency, higher throughput.
+- Throughput Mode:
+  - Bursting: General-purpose.
+  - Provisioned: High throughput.
+  - Elastic: Automatically adjusts throughput.
+- Storage Classes:
+  - Standard: Latency-sensitive use cases.
+  - Infrequent Access (IA): Cost-optimized for infrequent access.
+  - One Zone-IA: IA storage class in a single
+
+# EBS vs. EFS
+
+- Price
+  - EFS is more expensive but has IA to save costs.
+- Performance
+  - EBS is faster than EFS.
+- Use Case
+  - EBS is for a single EC2 instance.
+  - EFS is for multiple EC2 instances.
