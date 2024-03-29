@@ -125,3 +125,32 @@ flowchart LR
 - application servers don't see IP of the client(request sender) directly (replaced to Load Balancer's Private IP since the packet is relayed via Load Balancer!)
   - true IP inserted at header `X-Forwarded-For`
   - true Port inserted at header `X-Forwarded-Port` and proto `X-Forwarded-Proto`
+
+##### Hands-on summary
+
+###### overview
+
+```mermaid
+flowchart LR
+  tg[Target Group] --- instance1[EC2 instance A]
+  tg[Target Group] --- instance2[EC2 instance B]
+  ALB --- tg
+```
+
+###### security group
+
+```mermaid
+  sg1[ALB Security Group] --> ALB
+  sg2[EC2 Security Group] --- instance1[EC2 instance A]
+  sg2[EC2 Security Group] --- instance2[EC2 instance B]
+```
+
+- If we add inbound rule that only allow `ALB Security Group` to `EC2 Security Group`, now two instances are only reachable via ALB
+
+###### ALB rules
+
+- condition
+  - type: `HTTP request method`, `Path(url after hostname)`, `Source IP`, `Host header(hostname)`, `HTTP header`, `Query String`
+- actions
+  - type: forward to target groups, redirect to URL, return fixed response
+- priority
