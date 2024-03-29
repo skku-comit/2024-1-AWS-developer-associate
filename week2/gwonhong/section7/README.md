@@ -232,3 +232,38 @@ flowchart TB
   1. target groups - edit attributes - check `turn on stickiness`
   2. choose type between `load balancer generated cookie`, `application-based cookie`
   3. choose duration
+
+#### cross-zone load balancing
+
+- ALB
+  - enabled by default (can disable at Target Group level)
+  - No charges for inter AZ data
+- NLB, GLB
+  - disabled by default
+  - **charges** for inter AZ data
+
+##### without Cross Zone Load Balancing
+```mermaid
+flowchart TB
+  user ---|50| AZ1
+  user ---|50| AZ2
+  AZ1 ---|25| instance1
+  AZ1 ---|25| instance2
+  AZ2 ---|16.6| instance3
+  AZ2 ---|16.6| instance4
+  AZ2 ---|16.6| instance5
+```
+
+##### with Cross Zone Load Balancing
+```mermaid
+flowchart TB
+  user ---|50| AZ1
+  user ---|50| AZ2
+  AZ1 ---|20| instance1
+  AZ1 ---|20| instance2
+  AZ2 ---|20| instance3
+  AZ2 ---|20| instance4
+  AZ2 ---|20| instance5
+```
+
+- still 50:50 across AZ1, AZ2, but distributed later -> this is charged for NLB, GLB, but not for ALB
