@@ -154,3 +154,21 @@ flowchart LR
 - actions
   - type: forward to target groups, redirect to URL, return fixed response
 - priority
+
+#### Network Load Balancer
+
+- work on L4(Network Layer):
+  - Forward **TCP, UDP traffic** to your instances
+  - handle millions request per seconds
+  - **latency ~100ms (vs 400ms for ALB)**
+- NLB has **one static IP per AZ** and supports assigning Elastic IP
+- NLB are used for extreme performance, TCP or UDP traffic
+- Not included in AWS free tier
+
+##### Target Groups
+
+- EC2 instances
+- IP addresses: must be private IPs
+  - for example, you can use both EC2 and your own server's IP
+- ALB
+- Health Checks are supported via **TCP, HTTP, HTTPS protocols (not only TCP!)**
