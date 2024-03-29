@@ -34,3 +34,45 @@
 - High Availability: Run instances for the same application across multi AZ
     - Auto Scaling Group multi AZ
     - Load Balancer multi AZ
+
+## Load Balancing
+
+- Load Balancer: server that forward traffic to multiple servers downstream
+- why use a load balancer?
+    - spread load across multiple downstream instances (effectively)
+    - expose a single point of access to your application (to DNS)
+    - seamlessly handle failures of downstream instances & regular health checks to instances
+    - provide SSL termination for your websites
+    - enforce stickiness with cookies
+    - help achieving high availability across zones
+    - separate public traffic from private traffic
+
+### Elastic Load Balancer
+
+- managed load balancer
+    - AWS guarantees that it will be working
+    - AWS takes care of upgreades, maintenance, high availability
+    - AWS provides only a few config knobs
+- costs more, but much easier than setting up your own load balancer
+- integrated with many AWS offerings / services
+    - EC2, AWS Certified Manager, CloudWatch, Route53, AWS WAF, ...
+
+#### Health Checks
+
+- enable load balancer to know if downstream instances are available to reply to requests
+- done on a port and a route (`/health` is common)
+
+#### Types of AWS load balancer
+
+1. Classic Load Balancer (v1, 2009): HTTP, HTTPS, TCP, SSL (secure TCP)
+2. Application Load Balancer (v2, 2016): HTTP, HTTPS, WebSocket
+3. Network Load Balancer (v2, 2017): TCP, TLS (Secure TCP), UDP
+4. Gateway Load Balancer (2020): Operates at Network layer (L3) - IP Protocol
+
+- Overall, it's recommended to use newer generation
+- some can be setup as internal or external
+
+#### Load Balancer Security Groups
+
+1. Load Balancer: allow HTTP, HTTPS from anywhere
+2. instances: allow traffic only from Load Balancer - 이를 위해 instance의 security group의 'source'에 Load Balancer Security Group을 넣으면 된다!
