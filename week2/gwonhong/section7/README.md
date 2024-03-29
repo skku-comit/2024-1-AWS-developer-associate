@@ -185,11 +185,21 @@ flowchart TB
   users -----|traffic| GLB
   GLB --> tg
   tg -->|maybe some traffics are dropped| GLB
-  GLB ---->|relay traffics from tg| Application
+  GLB ---->|forward traffics from tg| Application
 ```
+- summary:
+  1. GLB receive packets from users
+  2. GLB forward all the packets to target group
+  3. target group do some tasks on packets (just log all of them, or maybe drop some of them for security), and send packets back to GLB
+  4. GLB forward all the packets (from target group) to destination (application)
 
 - operates at L3 (Network Layer) - IP packets
   - combine following functions:
     - Transparent Network Gateway: Single entry/exit for all traffic
     - Load Balancer: distributes traffic to your virtual appliances
 - use **GENEVE** protocol on port **6081** (appear on exam!)
+
+##### Target Groups
+
+- EC2 instances
+- IP Addresses
