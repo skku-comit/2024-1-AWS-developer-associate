@@ -319,3 +319,12 @@ flowchart TB
 - Classic Load Balancer: only support one cert
   - need to use multiple CLB for multiple hostname(with multiple SSL certs)
 - ALB, NLB (v2): support multiple certs & use SNI to make it work
+
+#### Deregistration Delay
+
+- delay before completely de-registering the instance to handle existing connections
+- situation
+  1. An EC2 instance is about to de-register
+  2. but there are existing connections to the instance
+  3. block new requests to the instance, while waiting for the existing connections === de-registration delay
+- between 1 - 3600 secs (default 300, 0 to disable)
