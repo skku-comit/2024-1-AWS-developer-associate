@@ -5,8 +5,8 @@
 ### Scalability
 
 - Scalability: application / system can handle greater loads by adapting
-    - Vertical Scalability
-    - Horizontal Scalability (== elasticity)
+  - Vertical Scalability
+  - Horizontal Scalability (== elasticity)
 - **Scalability != High Availalability**, but both are linked
 
 #### Vertical Scalability
@@ -32,30 +32,30 @@
 - Vertical Scaling: Increasing instance size (scale up / down)
 - Horizontal Scaling: Increasing number of instances (scale out / in)
 - High Availability: Run instances for the same application across multi AZ
-    - Auto Scaling Group multi AZ
-    - Load Balancer multi AZ
+  - Auto Scaling Group multi AZ
+  - Load Balancer multi AZ
 
 ## Load Balancing
 
 - Load Balancer: server that forward traffic to multiple servers downstream
 - why use a load balancer?
-    - spread load across multiple downstream instances (effectively)
-    - expose a single point of access to your application (to DNS)
-    - seamlessly handle failures of downstream instances & regular health checks to instances
-    - provide SSL termination for your websites
-    - enforce stickiness with cookies
-    - help achieving high availability across zones
-    - separate public traffic from private traffic
+  - spread load across multiple downstream instances (effectively)
+  - expose a single point of access to your application (to DNS)
+  - seamlessly handle failures of downstream instances & regular health checks to instances
+  - provide SSL termination for your websites
+  - enforce stickiness with cookies
+  - help achieving high availability across zones
+  - separate public traffic from private traffic
 
 ### Elastic Load Balancer
 
 - managed load balancer
-    - AWS guarantees that it will be working
-    - AWS takes care of upgreades, maintenance, high availability
-    - AWS provides only a few config knobs
+  - AWS guarantees that it will be working
+  - AWS takes care of upgreades, maintenance, high availability
+  - AWS provides only a few config knobs
 - costs more, but much easier than setting up your own load balancer
 - integrated with many AWS offerings / services
-    - EC2, AWS Certified Manager, CloudWatch, Route53, AWS WAF, ...
+  - EC2, AWS Certified Manager, CloudWatch, Route53, AWS WAF, ...
 
 #### Health Checks
 
