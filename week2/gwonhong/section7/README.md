@@ -140,6 +140,7 @@ flowchart LR
 ###### security group
 
 ```mermaid
+flowchart LR
   sg1[ALB Security Group] --> ALB
   sg2[EC2 Security Group] --- instance1[EC2 instance A]
   sg2[EC2 Security Group] --- instance2[EC2 instance B]
@@ -157,7 +158,7 @@ flowchart LR
 
 #### Network Load Balancer
 
-- work on L4(Network Layer):
+- work on L4(Transport Layer):
   - Forward **TCP, UDP traffic** to your instances
   - handle millions request per seconds
   - **latency ~100ms (vs 400ms for ALB)**
@@ -172,3 +173,23 @@ flowchart LR
   - for example, you can use both EC2 and your own server's IP
 - ALB
 - Health Checks are supported via **TCP, HTTP, HTTPS protocols (not only TCP!)**
+
+#### Gateway Load Balancer
+
+- deploy, scale, manage a fleet of 3rd party network virtual appliances in AWS
+- ex: firewalls, intrusion detection & prevention systems, deep packet inspection systems, payload manipulation, ...
+
+```mermaid
+flowchart TB
+  tg[Target Group, such as Firewall]
+  users -----|traffic| GLB
+  GLB --> tg
+  tg -->|maybe some traffics are dropped| GLB
+  GLB ---->|relay traffics from tg| Application
+```
+
+- operates at L3 (Network Layer) - IP packets
+  - combine following functions:
+    - Transparent Network Gateway: Single entry/exit for all traffic
+    - Load Balancer: distributes traffic to your virtual appliances
+- use **GENEVE** protocol on port **6081** (appear on exam!)
