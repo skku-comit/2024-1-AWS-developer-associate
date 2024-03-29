@@ -86,7 +86,7 @@
 - routing tables to different target groups:
   - Routing based on
     1. path in URL
-    2. hostname in URL
+    2. hostname in URL: usage? multiple hostname pointing to same IP, to use single server with multiple applications!
     3. Query String, Headers
 - great fit for micro services & container-based application (Docker & ECS)
 - Has a port mapping feature to redirect to a dynamic port in ECS
@@ -278,6 +278,10 @@ flowchart TB
 - TLS are mainly used nowadays (but still referred as SSL)
 - public SSL certficates are issued by CA(Certificate Authorities)
 - has expiration date so must be renewed
+- 추가 조사
+  - a single SSL cert can be used for multiple hostnames
+  - 그렇다면 왜 ALB가 multiple certs 간 smart selection 기능을 지원하는가?
+    - 아마 새로운 hostname 추가가 필요할 경우에는 새 cert를 발급받아야 하기에 지원하는 기능이 아닐까?
 
 ##### overview
 
@@ -302,7 +306,7 @@ flowchart LR
 - solves the problem of loading **multiple SSL certificates onto one web server** (to serve multiple websites)
 - requires client to *indicate* the hostname of the target server in the initial SSL handshake
 - server will then find correct certificate (or return the default one)
-- it's (relatively) 'new' protocol, only works for ALB, NLB, CloudFront
+- it's (relatively) 'new' feature at TLS, only works for ALB, NLB, CloudFront
 
 ```mermaid
 flowchart TB
