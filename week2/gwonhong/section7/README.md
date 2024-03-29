@@ -267,3 +267,55 @@ flowchart TB
 ```
 
 - still 50:50 across AZ1, AZ2, but distributed later -> this is charged for NLB, GLB, but not for ALB
+
+#### SSL Certificates
+
+##### SSL/TLS basics
+
+- SSL certificate allows traffic between your clients and your load balancer to be encrypted 'in transit' (in-flight encryption)
+- SSL(Secure Sockets Layer): encrypt connections
+- TLS(Transport Layer Security): newer version
+- TLS are mainly used nowadays (but still referred as SSL)
+- public SSL certficates are issued by CA(Certificate Authorities)
+- has expiration date so must be renewed
+
+##### overview
+
+```mermaid
+flowchart LR
+  lb[Load Balancer]
+  Users ---|HTTPS over www| lb
+  lb ---|HTTP over VPC| instance
+```
+
+- load balancer uses X.509 certificate
+- you can manage certificates using ACM (AWS Certificate Manager)
+- can also use your own certificates
+- HTTPS listener:
+  - you must specify a default certificate
+  - you can add optional list of certs to support multiple domains
+  - clients can use SNI (Server Name Indication) to specify the hostname they reach
+  - has ability to specify security policy (to support older versions of SSL/TLS)
+
+##### Server Name Indication (SNI)
+
+- solves the problem of loading **multiple SSL certificates onto one web server** (to serve multiple websites)
+- requires client to *indicate* the hostname of the target server in the initial SSL handshake
+- server will then find correct certificate (or return the default one)
+- it's (relatively) 'new' protocol, only works for ALB, NLB, CloudFront
+
+```mermaid
+flowchart TB
+  Client ---|connect to a.com| ALB
+  ALB --- tg1[Target group for a.com]
+  ALB --- tg2[Target group for b.com]
+```
+
+- here ALB has SSL certs for both `a.com` and `b.com`
+- ALB choose right cert and establish SSL connection with it
+
+##### history
+
+- Classic Load Balancer: only support one cert
+  - need to use multiple CLB for multiple hostname(with multiple SSL certs)
+- ALB, NLB (v2): support multiple certs & use SNI to make it work
