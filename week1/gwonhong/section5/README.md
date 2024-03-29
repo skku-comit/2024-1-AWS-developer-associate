@@ -20,8 +20,8 @@
 1. OS: Linux, Windows, Mac OS
 2. CPU, RAM
 3. Storage:
-    1. Network-attached: EBS, EFS
-    2. HW: EC2 Instance Store
+   1. Network-attached: EBS, EFS
+   2. HW: EC2 Instance Store
 4. Network card: speed of the card, public IP address
 5. Firewall rules: security group
 6. Bootstrap script: EC2 User Data
@@ -30,8 +30,8 @@
 
 - EC2 user data script: run once at the instance 'first start'
 - example:
-    - install updates, softwares
-    - download files, ...
+  - install updates, softwares
+  - download files, ...
 - runs with root user (sudo)
 
 ### EC2 instance types
@@ -45,9 +45,9 @@
 
 - <https://aws.amazon.com/ec2/instance-types/>
 - naming convention: `m5.2xlarge`
-    - m: instance class
-    - 5: generation
-    - 2xlarge: size within the instance class
+  - m: instance class
+  - 5: generation
+  - 2xlarge: size within the instance class
 
 #### General Purpose
 
@@ -82,9 +82,9 @@
 
 - act as "firewall"
 - regulate
-    - access to ports
-    - authroized IP ranges
-    - control of inbound(between instances) and outbound(instance - internet) network
+  - access to ports
+  - authroized IP ranges
+  - control of inbound(between instances) and outbound(instance - internet) network
 
 ### Good to know
 
@@ -121,7 +121,7 @@
 
 #### connect via EC2 Instance Connect
 
-- AWS web console에서 바로 EC2 Instance와 연결된 terminal을 띄워줌. 
+- AWS web console에서 바로 EC2 Instance와 연결된 terminal을 띄워줌.
 - 목록에서 연결을 원하는 instance 클릭 - (우측 상단)connect - EC2 Instance Connect - user name은 (Amazon Linux의 경우)기본적으로 `ec2-user`
 - 결국 SSH를 이용하는 것으로, SSH port (22번)을 허용하지 않으면 이것도 작동하지 않으므로 주의!
 
