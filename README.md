@@ -4,6 +4,7 @@
 
 - [박지환](https://github.com/aptheparker) (스터디 리더)
 - [홍권](https://github.com/gwonhong)
+- [박근영](https://github.com/Sebyeol23)
 
 ## Study Goal
 
