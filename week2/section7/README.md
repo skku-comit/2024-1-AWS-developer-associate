@@ -76,3 +76,52 @@
 
 1. Load Balancer: allow HTTP, HTTPS from anywhere
 2. instances: allow traffic only from Load Balancer - 이를 위해 instance의 security group의 'source'에 Load Balancer Security Group을 넣으면 된다!
+
+#### Application Load Balancer
+
+- works at L7 (HTTP)
+- Load balancing to
+  1. multiple HTTP applications across machines (target groups)
+  2. multiple applications on the same machine (like containers)
+- routing tables to different target groups:
+  - Routing based on
+    1. path in URL
+    2. hostname in URL
+    3. Query String, Headers
+- great fit for micro services & container-based application (Docker & ECS)
+- Has a port mapping feature to redirect to a dynamic port in ECS
+- We would need multiple load balancers with Classic Load Balancer
+
+##### HTTP Based Traffic
+
+```mermaid
+flowchart LR
+  www1[www] ---|/user| ALB ---|HTTP| app1[Target Group for Users application]
+  www2[www] ---|/search| ALB ---|HTTP| app2[Target Group for Search application]
+```
+
+##### Target Groups
+
+- Can be one of following:
+  - EC2 instances (managed by Auto Scaling Group) - HTTP
+  - ECS tasks (managed by ECS itself) - HTTP
+  - Lambda functions - HTTP request translated into a JSON event: base of 'serverless'
+  - IP Addresses - must be private IPs
+- ALB can route to multiple target groups
+- Health checks are at the target group level
+
+##### Query Strings / Parameters Routing
+
+```mermaid
+flowchart LR
+  www ---|requests| ALB
+  ALB ---|?Platform=Mobile| tg1[Target Group 1: EC2 based]
+  ALB ---|?Platform=Desktop| tg2[Target Group 2: On-premises - Private IP routing]
+```
+
+##### Good to know
+
+- Fixed Hostname (XXX.region.elb.amazonaws.com)
+- application servers don't see IP of the client(request sender) directly (replaced to Load Balancer's Private IP since the packet is relayed via Load Balancer!)
+  - true IP inserted at header `X-Forwarded-For`
+  - true Port inserted at header `X-Forwarded-Port` and proto `X-Forwarded-Proto`
