@@ -375,3 +375,9 @@ flowchart TB
 - advice
   - use ready-to-use AMI to reduce configuration time
   - and reduce cooldown period
+
+##### Instance Refresh
+
+- goal: update launch template and then re-create all EC2 instances
+- min healthy percentage: how many instances should be healthy while refresh is performing
+- warm-up time: how long until the instance is ready to use
