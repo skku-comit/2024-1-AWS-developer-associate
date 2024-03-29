@@ -328,3 +328,50 @@ flowchart TB
   2. but there are existing connections to the instance
   3. block new requests to the instance, while waiting for the existing connections === de-registration delay
 - between 1 - 3600 secs (default 300, 0 to disable)
+
+#### Auto Scaling Group
+
+- scale out (add EC2 intances) to match increased load
+- or scale in to match decreased load
+- ensure we have minimum and maximum number (limit) of EC2 instances running
+- automatically register new instances to load balancer
+- re-create an EC2 instance in case a previous one is terminated
+- free! (only pay for EC2 instances)
+
+##### attributes
+
+- launch template: configs of EC2 instance when it's launched
+- min size, max size, init capacity
+- policy
+
+##### CloudWatch Alarms & Scaling
+
+- you can scale ASG based on CloudWatch alarms (monitors metrics such as **Average CPU usage** (of all instances in ASG) or any custom metrics)
+
+##### Scaling Policies
+
+- Dynamic Scaling
+  - target tracking scaling
+    - simple to set-up
+    - example: average CPU to stay around 40%
+  - simple / step scaling
+    - when alarm (CPU > 70%) is triggered, add 2 units
+    - when alarm (CPU < 30%) is triggered, remove 1 unit
+- Scheduled Scaling
+  - anticipate scaling based on known usage patterns
+  - example: increase min capacity to 10 at Sunday 10PM
+- Predictive Scaling
+  - continuously forecast load and schedule scaling ahead
+
+##### Good metrics to scale on
+
+- CPUUtilization: avg CPU utilization across instances
+- RequestCountPerTarget: # of requests per EC2 instance is stable
+- Average Network In / Out (if application is network bound)
+
+##### Scaling Cooldowns
+
+- after scaling activity happens, enter into **cooldown period (default 300 secs)**, to wait until metrics stabilized
+- advice
+  - use ready-to-use AMI to reduce configuration time
+  - and reduce cooldown period
