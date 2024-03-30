@@ -40,3 +40,27 @@
 - Enforce IAM Authentication for DB connections and securely store credentials in Secrets Manager.
 - RDS Proxy is only accessible within the VPC.
   ![RDS Proxy](./images/rds-proxy.png)
+
+## ElastiCache
+
+- **In-memory caching** service: Redis or Memcached.
+- **Improves latency** and **throughput** for read-heavy applications.
+- Can be used for user session store, database cache, etc.
+- Redis vs Memcached:
+  - **Redis**: Multi-AZ, Read Replicas, Backup and Restore, Data Persistence.
+  - **Memcached**: Multi-node for partitioning large data, non-persistent.
+
+## ElastiCache Strategies
+
+- **Lazy Loading**: Cache miss -> fetch from DB -> store in cache.
+  - **Pros**: Only cache what's needed.
+  - **Cons**: Cache miss penalty. (Has to fetch from DB), stale data (if DB is updated).
+    ![ElastiCache Lazy Loading](./images/elasticache-lazy-loading.png)
+- **Write Through**: Write to cache and DB.
+  - **Pros**: Data in cache is never stale.
+  - **Cons**: Write penalty. (Has to write to DB), Cache churn (data not read is evicted).
+    ![ElastiCache Write Through](./images/elasticache-write-through.png)
+- Cache Eviction and Time-to-Live (TTL)
+  - **TTL**: Time-to-Live for cache data.
+  - **LRU**: Least Recently Used for cache eviction.
+  - **LFU**: Least Frequently Used for cache eviction.
