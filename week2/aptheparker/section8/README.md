@@ -64,3 +64,7 @@
   - **TTL**: Time-to-Live for cache data.
   - **LRU**: Least Recently Used for cache eviction.
   - **LFU**: Least Frequently Used for cache eviction.
+
+## TODO:
+
+- At-rest encryption: Encrypts data using KMS. -> 디비 자체에 암호화된 데이터를 저장하는 것인지?
