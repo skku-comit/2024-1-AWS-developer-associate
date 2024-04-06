@@ -150,7 +150,7 @@
 - Use Cases:
   - Big Data analytics, mobile & gaming applications, content distribution…
 
-### Standard-IA
+### IA
 
 - For data that is less frequently accessed, but requires rapid access when needed
 - Lower cost than S3 Standard
