@@ -166,13 +166,10 @@
 - Notes:
   - Glacier Instant Retrieval:
     - Millisecond retrieval, great for data accessed once a quarter
-    - Minimum storage duration of 90 days
   - Glacier Flexible Retrieval:
     - Expedited (1 to 5 minutes), Standard (3 to 5 hours), Bulk (5 to 12 hours) – free
-    - Minimum storage duration of 90 days
   - Glacier Deep Archive:
     - Standard (12 hours), Bulk (48 hours)
-    - Minimum storage duration of 180 days
 
 ### Intelligent Tiering
 
