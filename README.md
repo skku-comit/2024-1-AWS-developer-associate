@@ -14,7 +14,8 @@
 ## Study Schedule
 
 - 1주차: 2024.03.17 ~ 2024.03.24 (Section 4, 5, 6)
-- 2주차: 2024.03.25 ~ 2024.03.31 (Section 7, 8)
+- 2주차: 2024.03.25 ~ 2024.03.29 (Section 7, 8)
+- 3주차: 2024.03.30 ~ 2024.04.05 (Section 9, 10, 11)
 
 ## Study Rule
 
@@ -35,25 +36,26 @@
   7. ELB + ASG<br>
   8. RDS + Aurora + ElastiCache<br>
   9. Route 53<br>
-  10. S3<br>
-  11. CLI, SDK, IAM Roles & Policies<br>
-  12. Advanced AWS S3<br>
-  13. S3 Security<br>
-  14. CloudFront<br>
-  15. ECS, ECR & Fargate - Docker in AWS<br>
-  16. Elastic Beanstalk<br>
-  17. CloudFormation<br>
-  18. SQS, SNS, Kinesis<br>
-  19. CloudWatch, X-Ray & CloudTrail<br>
-  20. Lambda<br>
-  21. DynamoDB<br>
-  22. API Gateway<br>
-  23. CI/CD: CodeCommit, CodePipeline, CodeBuild, CodeDeploy<br>
-  24. Serverless Application Model (SAM)<br>
-  25. Cloud Development Kit (CDK)<br>
-  26. Cognito User Pools, Cognito Identity Pools, Cognito Sync<br>
-  27. Step Functions, AppSync<br>
-  28. Advanced Identity<br>
-  29. Security: KMS, Encryption SDK, SSM Parameter Store, IAM & STS<br>
-  30. Other Services<br>
+  10. VPC<br>
+  11. S3<br>
+  12. CLI, SDK, IAM Roles & Policies<br>
+  13. Advanced AWS S3<br>
+  14. S3 Security<br>
+  15. CloudFront<br>
+  16. ECS, ECR & Fargate - Docker in AWS<br>
+  17. Elastic Beanstalk<br>
+  18. CloudFormation<br>
+  19. SQS, SNS, Kinesis<br>
+  20. CloudWatch, X-Ray & CloudTrail<br>
+  21. Lambda<br>
+  22. DynamoDB<br>
+  23. API Gateway<br>
+  24. CI/CD: CodeCommit, CodePipeline, CodeBuild, CodeDeploy<br>
+  25. Serverless Application Model (SAM)<br>
+  26. Cloud Development Kit (CDK)<br>
+  27. Cognito User Pools, Cognito Identity Pools, Cognito Sync<br>
+  28. Step Functions, AppSync<br>
+  29. Advanced Identity<br>
+  30. Security: KMS, Encryption SDK, SSM Parameter Store, IAM & STS<br>
+  31. Other Services<br>
   </details>
