@@ -3,7 +3,6 @@
 ## Members
 
 - [박지환](https://github.com/aptheparker) (스터디 리더)
-- [홍권](https://github.com/gwonhong)
 - [박근영](https://github.com/Sebyeol23)
 
 ## Study Goal
@@ -16,7 +15,7 @@
 - 1주차: 2024.03.17 ~ 2024.03.24 (Section 4, 5, 6)
 - 2주차: 2024.03.25 ~ 2024.03.29 (Section 7, 8)
 - 3주차: 2024.03.30 ~ 2024.04.06 (Section 9, 10, 11)
-- 4주차: 2024.04.07 ~ 2024.04.12 (Section 12, 13, 14)
+- 4주차: 2024.04.07 ~ 2024.04.12 (Section 12, 13)
 
 ## Study Rule
 
