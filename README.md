@@ -7,7 +7,7 @@
 
 ## Study Goal
 
-- AWS Certified Developer Associate 자격증 취득 (~2024.07).
+- AWS Certified Developer Associate 자격증 취득.
 - AWS 서비스에 대한 이해와 활용 능력 향상.
 
 ## Study Schedule
@@ -16,6 +16,7 @@
 - 2주차: 2024.03.25 ~ 2024.03.29 (Section 7, 8)
 - 3주차: 2024.03.30 ~ 2024.04.06 (Section 9, 10, 11)
 - 4주차: 2024.04.07 ~ 2024.04.12 (Section 12, 13)
+- 5주차: 2024.04.20 ~ 2024.04.26 (Section 14, 15)
 
 ## Study Rule
 
