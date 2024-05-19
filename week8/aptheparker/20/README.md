@@ -38,7 +38,7 @@
 
 ### CloudWatch Logs Subscription
 
-f![CloudWatch Logs Subscription](./images/cloudwatch-logs-subscription.png)
+![CloudWatch Logs Subscription](./images/cloudwatch-logs-subscription.png)
 
 - Real-time log events from CloudWatch Logs for processing and analysis.
 - `Subscription Filter`: Filter which logs are events delivered to your destination.
@@ -159,7 +159,7 @@ f![CloudWatch Logs Subscription](./images/cloudwatch-logs-subscription.png)
 ### X-Ray APIs
 
 - Write APIs:
-  ` -`PutTraceSegments`: Uploads segment documents to AWS X-Ray.
+  - `PutTraceSegments`: Uploads segment documents to AWS X-Ray.
   - `PutTelemetryRecords`: Used by the AWS X-Ray daemon to send telemetry data.
   - `GetSamplingRules`: Retrieves all sampling rules.
   - `GetSamplingTargets`: Retrieves information about the number of requests instrumented by the X-Ray SDK.
