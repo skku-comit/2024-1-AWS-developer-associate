@@ -2,7 +2,7 @@
 
 ## Continuous Integration (CI)
 
-<img src="./images/ci.png" width="500" height="300" alt="Transfer Acceleration"/>
+<img src="./images/ci.png" width="400" height="200" alt="Transfer Acceleration"/>
 
 - Developers push the code to a code repository often (e.g., GitHub, CodeCommit, Bitbucket…)
 - A testing / build server checks the code as soon as it’s pushed (CodeBuild, Jenkins CI, …)
@@ -10,7 +10,6 @@
 - Find bugs early, then fix bugs
 - Deliver faster as the code is tested
 - Deploy often
-- Happier developers, as they’re unblocked
 
 ## Continuous Delivery (CD)
 
@@ -18,8 +17,6 @@
 
 - Ensures that the software can be released reliably whenever needed
 - Ensures deployments happen often and are quick
-- Shift away from “one release every 3 months” to ”5 releases a day”
-- That usually means automated deployment (e.g., CodeDeploy, Jenkins CD, Spinnaker, …)
 
 ## AWS CodeCommit
 
@@ -27,9 +24,9 @@
 - All these are enabled by using a version control system such as Git
 - A Git repository can be synchronized on your computer, but it usually is uploaded on a central online repository
 - Benefits are:
-- Collaborate with other developers
-- Make sure the code is backed-up somewhere
-- Make sure it’s fully viewable and auditable
+  - Collaborate with other developers
+  - Make sure the code is backed-up somewhere
+  - Make sure it’s fully viewable and auditable
 
 ---
 
@@ -80,7 +77,6 @@
 
 ## CodePipeline – Troubleshooting
 
-- For CodePipeline Pipeline/Action/Stage Execution State Changes
 - Use **CloudWatch Events (Amazon EventBridge)**. Example:
   - You can create events for failed pipelines
   - You can create events for cancelled stages
@@ -90,125 +86,152 @@
 
 ## AWS CodeBuild
 
-- A fully managed continuous integration (CI) service
-- Continuous scaling (no servers to manage or provision – no build queue)
-- Compile source code, run tests, produce software packages, …
-- Alternative to other build tools (e.g., Jenkins)
-- Charged per minute for compute resources (time it takes to complete the builds)
-- Leverages Docker under the hood for reproducible builds
-- Use prepackaged Docker images or create your own custom Docker image
-- Security:
-  - Integration with KMS for encryption of build artifacts
-  - IAM for CodeBuild permissions, and VPC for network security
-  - AWS CloudTrail for API calls logging
+<img src="./images/build.png" width="500" height="300" alt="Transfer Acceleration"/>
 
-## Lambda Function Dependencies
+- Source – CodeCommit, S3, Bitbucket, GitHub
+- Build instructions: Code file buildspec.yml or insert manually in Console
+- Output logs can be stored in Amazon S3 & CloudWatch Logs
+- Use CloudWatch Metrics to monitor build statistics
+- Use EventBridge to detect failed builds and trigger notifications
+- Use CloudWatch Alarms to notify if you need “thresholds” for failures
+- Build Projects can be defined within CodePipeline or CodeBuild
 
-- If your Lambda function depends on external libraries, You need to install the packages alongside your code and zip it together
-- Upload the zip straight to Lambda if less than 50MB, else to S3 first
-- Native libraries work: they need to be compiled on Amazon Linux
-- AWS SDK comes by default with every Lambda function
+## CodeBuild – buildspec.yml
 
-## Lambda and CloudFormation – inline
+- buildspec.yml file must be at the root of your code
+- env – define environment variables
+  - variables – plaintext variables
+  - parameter-store – variables stored in SSM Parameter Store
+  - secrets-manager – variables stored in AWS Secrets Manager
+- phases – specify commands to run:
+  - install – install dependencies you may need for your build
+  - pre_build – final commands to execute before build
+  - Build – actual build commands
+  - post_build – finishing touches (e.g., zip output)
+- artifacts – what to upload to S3 (encrypted with KMS)
+- cache – files to cache (usually dependencies) to S3 for
+  future build speedup
 
-- Cannot include function dependencies with inline functions
+## AWS CodeDeploy
 
-## Lambda and CloudFormation – through S3
+- Deployment service that automates application deployment
+- Deploy new applications versions to EC2 Instances, On-premises servers, Lambda functions, ECS Services
+- Automated Rollback capability in case of failed deployments, or trigger CloudWatch Alarm
+- Gradual deployment control
+- A file named appspec.yml defines how the deployment happens
 
-- You must store the Lambda zip in S3
-- You must refer the S3 zip location in the CloudFormation code
-  - S3Bucket
-  - S3Key: full path to zip
-  - S3ObjectVersion: if versioned bucket
+## CodeDeploy – EC2/On-premises Platform
 
-## Lambda Container Images
+- Can deploy to EC2 Instances & on-premises servers
+- Perform in-place deployments or blue/green deployments
+- Must run the CodeDeploy Agent on the target instances
+- Define deployment speed
+  - AllAtOnce: most downtime
+  - HalfAtATime: reduced capacity by 50%
+  - OneAtATime: slowest, lowest availability impact
+  - Custom: define your %
 
-- Deploy Lambda function as container images of up to 10GB from ECR
-- Base images are available for Python, Node.js, Java, .NET, Go, Ruby
-- Can create your own image as long as it implements the Lambda Runtime API
-- Test the containers locally using the Lambda Runtime Interface Emulator
+<img src="./images/in-place.png" width="500" height="300" alt="Transfer Acceleration"/>
 
-## Lambda Container Images – Best Practices
+<img src="./images/blue-green.png" width="500" height="300" alt="Transfer Acceleration"/>
 
-- Strategies for optimizing container images:
-  - Use AWS-provided Base Images
-    - Stable, Built on Amazon Linux 2, cached by Lambda service
-  - Use Multi-Stage Builds
-    - Build your code in larger preliminary images, copy only the artifacts you need in your final container image, discard the preliminary steps
-  - Build from Stable to Frequently Changing
-    - Make your most frequently occurring changes as late in your Dockerfile as possible
-  - Use a Single Repository for Functions with Large Layers
-    - ECR compares each layer of a container image when it is pushed to avoid uploading and storing duplicates
-- Use them to upload large Lambda Functions (up to 10 GB)
+## CodeDeploy Agent
 
-## AWS Lambda Versions
+- The CodeDeploy Agent must be running on the EC2 instances as a pre requisites
+- It can be installed and updated automatically if you’re using Systems Manager
+- The EC2 Instances must have sufficient permissions to access Amazon S3 to get deployment bundles
 
-<img src="./images/version.png" width="300" height="300" alt="Transfer Acceleration"/>
+## CodeDeploy – Lambda Platform
 
-## AWS Lambda Aliases
-
-<img src="./images/alias.png" width="300" height="300" alt="Transfer Acceleration"/>
-
-## Lambda & CodeDeploy
-
-<img src="./images/code-deploy.png" width="500" height="400" alt="Transfer Acceleration"/>
+<img src="./images/lambda.png" width="500" height="300" alt="Transfer Acceleration"/>
 
 - CodeDeploy can help you automate traffic shift for Lambda aliases
-- Linear: grow traffic every N minutes until 100%
-  - Linear10PercentEvery3Minutes
-  - Linear10PercentEvery10Minutes
-- Canary: try X percent then 100%
-  - Canary10Percent5Minutes
-  - Canary10Percent30Minutes
-- AllAtOnce: immediate
-- Can create Pre & Post Traffic hooks to check the health of the Lambda function
+- **Linear**: grow traffic every N minutes until 100%
+  - LambdaLinear10PercentEvery3Minutes
+  - LambdaLinear10PercentEvery10Minutes
+- **Canary**: try X percent then 100%
+  - LambdaCanary10Percent5Minutes
+  - LambdaCanary10Percent30Minutes
+- **AllAtOnce**: immediate
 
-## Function URL
+## CodeDeploy – ECS Platform
 
-- Dedicated HTTP(S) endpoint for your Lambda function
-- A unique URL endpoint is generated for you (never changes)
-  - https://{url-id}.lambda-url.{region}.on.aws (dual-stack IPv4 & IPv6)
-- Access your function URL through the public Internet only
-- Supports Resource-based Policies & CORS configurations
-- Can be applied to any function alias or to $LATEST (can’t be applied to other function versions)
-- Create and configure using AWS Console or AWS API
+<img src="./images/ecs.png" width="500" height="300" alt="Transfer Acceleration"/>
 
-## Function URL Security
+- CodeDeploy can help you automate the deployment of a new ECS Task Definition
+- Only Blue/Green Deployments
+- **Linear**: grow traffic every N minutes until 100%
+  - ECSLinear10PercentEvery3Minutes
+  - ECSLinear10PercentEvery10Minutes
+- **Canary**: try X percent then 100%
+  - ECSCanary10Percent5Minutes
+  - ECSCanary10Percent30Minutes
+- **AllAtOnce**: immediate
 
-- Resource-based Policy
-  - AuthType NONE: allow public and unauthenticated access
-  - AuthType AWS_IAM: IAM is used to authenticate and authorize requests
-    - Same account: Identity-based Policy OR Resource-based Policy as ALLOW
-    - Cross account: Identity-based Policy AND Resource Based Policy as ALLOW
-- Cross-Origin Resource Sharing (CORS)
+## CodeDeploy – Redeploy & Rollbacks
 
-## Lambda and CodeGuru Profiling
+- Rollback = redeploy a previously deployed revision of your application
+- Deployments can be rolled back:
+  - Automatically – rollback when a deployment fails or rollback when a CloudWatch Alarm thresholds are met
+  - Manually
+- Disable Rollbacks — do not perform rollbacks for this deployment
+- If a roll back happens, CodeDeploy redeploys the last known good revision as a new deployment (not a restored version)
 
-- Gain insights into runtime performance of your Lambda functions using CodeGuru Profiler
-- CodeGuru creates a Profiler Group for your Lambda function
-- Supported for Java and Python runtimes
-- Activate from AWS Lambda Console
-- When activated, Lambda adds:
-  - CodeGuru Profiler layer to your function
-  - Environment variables to your function
-  - AmazonCodeGuruProfilerAgentAccess policy to your function
+## AWS CodeStar
 
-## AWS Lambda Limits to Know - per region
+- An integrated solution that groups: GitHub, CodeCommit, CodeBuild, CodeDeploy, CloudFormation, CodePipeline, CloudWatch, …
+- Quickly create “CICD-ready” projects for EC2, Lambda, Elastic Beanstalk
+- Supported languages: C#, Go, HTML 5, Java, Node.js, PHP, Python, Ruby
+- Issue tracking integration with JIRA / GitHub Issues
+- Ability to integrate with Cloud9 to obtain a web IDE (not all regions)
+- One dashboard to view all your components
+- Free service, pay only for the underlying usage of other services
+- Limited Customization
 
-- Execution:
-  - Memory allocation: 128 MB – 10GB (1 MB increments)
-  - Maximum execution time: 900 seconds (15 minutes)
-  - Environment variables (4 KB)
-  - Disk capacity in the “function container” (in /tmp): 512 MB to 10GB
-  - Concurrency executions: 1000 (can be increased)
-- Deployment:
-  - Lambda function deployment size (compressed .zip): 50 MB
-  - Size of uncompressed deployment (code + dependencies): 250 MB
-  - Size of environment variables: 4 KB
+## AWS CodeArtifact
 
-## AWS Lambda Best Practices
+- Storing and retrieving dependencies is called artifact management
+- Traditionally you need to setup your own artifact management system
+- CodeArtifact is a secure, scalable, and cost-effective artifact management for software development
+- Works with common dependency management tools such as Maven, Gradle, npm, yarn, twine, pip, and NuGet
+- Developers and CodeBuild can then retrieve dependencies straight from CodeArtifact
 
-- Perform heavy-duty work outside of your function handler
-- Use environment variables
-- Minimize your deployment package size to its runtime necessities
-- Avoid using recursive code, never have a Lambda function call itself
+<img src="./images/code-artifact.png" width="500" height="300" alt="Transfer Acceleration"/>
+
+## CodeArtifact – EventBridge Integration
+
+<img src="./images/event-bridge.png" width="500" height="300" alt="Transfer Acceleration"/>
+
+## CodeArtifact – Resource Policy
+
+- Can be used to authorize another account to access CodeArtifact
+- A given principal can either read all the packages in a repository or none of them
+
+## Amazon CodeGuru
+
+- An ML-powered service for automated code reviews and application performance recommendations
+- Provides two functionalities
+  - CodeGuru Reviewer: automated code reviews for static code analysis (development)
+  - CodeGuru Profiler: visibility/recommendations about application performance during runtime (production)
+
+## Amazon CodeGuru – Agent Configuration
+
+- MaxStackDepth – the maximum depth of the stacks in the code that is represented in the profile
+  - Example: if CodeGuru Profiler finds a method A, which calls method B, which calls method C, which calls method D, then the depth is 4
+  - If the MaxStackDepth is set to 2, then the profiler evaluates A and B
+- MemoryUsageLimitPercent – the memory percentage used by the profiler
+- MinimumTimeForReportingInMilliseconds – the minimum time between sending reports (milliseconds)
+- ReportingIntervalInMilliseconds – the reporting interval used to report profiles (milliseconds)
+- SamplingIntervalInMilliseconds – the sampling interval that is used to profile samples (milliseconds)
+  - Reduce to have a higher sampling rate
+
+## AWS Cloud9
+
+<img src="./images/cloud9.png" width="500" height="300" alt="Transfer Acceleration"/>
+
+- Cloud-based Integrated Development Environment (IDE)
+- Code editor, debugger, terminal in a browser
+- Work on your projects from anywhere with an Internet connection
+- Prepackaged with essential tools for popular programming languages (JavaScript, Python, PHP, …)
+- Share your development environment with your team (pair programming)
+- Fully integrated with AWS SAM & Lambda to easily build serverless applications
