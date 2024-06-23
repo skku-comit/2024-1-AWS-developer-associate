@@ -2,9 +2,10 @@
 
 ## AWS Step Functions
 
+<img src="./images/step.png" width="600" height="350" alt="Transfer Acceleration"/>
+
 - Model your workflows as state machines (one per workflow)
-- Order fulfillment, Data processing
-- Web applications, Any workflow
+- Order fulfillment, Data processing, Web applications, Any workflow
 - Written in JSON
 - Visualization of the workflow and the execution of the workflow, as well as history
 - Start workflow with SDK call, API Gateway, Event Bridge (CloudWatch Event)
@@ -13,44 +14,73 @@
 
 - Do some work in your state machine
 - Invoke one AWS service
-- Can invoke a Lambda function
-- Run an AWS Batch job
-- Run an ECS task and wait for it to complete
-- Insert an item from DynamoDB
-- Publish message to SNS, SQS
-- Launch another Step Function workflow…
+  - Can invoke a Lambda function
+  - Run an AWS Batch job
+  - Run an ECS task and wait for it to complete
+  - Insert an item from DynamoDB
+  - Publish message to SNS, SQS
+  - Launch another Step Function workflow…
 - Run an one Activity
-- EC2, Amazon ECS, on-premises
-- Activities poll the Step functions for work
-- Activities send results back to Step Functions
+  - EC2, Amazon ECS, on-premises
+  - Activities poll the Step functions for work
+  - Activities send results back to Step Functions
 
 ## Step Function - States
 
-- Choice State- Test for a condition to send to a branch (or default branch)
-- Fail or Succeed State- Stop execution with failure or success
-- Pass State- Simply pass its input to its output or inject some fixed data, without performing work.
-- Wait State- Provide a delay for a certain amount of time or until a specified time/date.
-- Map State- Dynamically iterate steps.’
-- Parallel State- Begin parallel branches of execution.
+- Choice State
+  - Test for a condition to send to a branch (or default branch)
+- Fail or Succeed State
+  - Stop execution with failure or success
+- Pass State
+  - Simply pass its input to its output or inject some fixed data, without performing work.
+- Wait State
+  - Provide a delay for a certain amount of time or until a specified time/date.
+- Map State
+  - Dynamically iterate steps.’
+- Parallel State
+  - Begin parallel branches of execution.
 
 ## Error Handling in Step Functions
 
 - Any state can encounter runtime errors for various reasons:
-- State machine definition issues (for example, no matching rule in a Choice state)
-- Task failures (for example, an exception in a Lambda function)
-- Transient issues (for example, network partition events)
+  - State machine definition issues (for example, no matching rule in a Choice state)
+  - Task failures (for example, an exception in a Lambda function)
+  - Transient issues (for example, network partition events)
 - Use Retry (to retry failed state) and Catch (transition to failure path) in the State Machine to handle the errors instead of inside the Application Code
 - Predefined error codes:
-- States.ALL : matches any error name
-- States.Timeout: Task ran longer than TimeoutSeconds or no heartbeat received
-- States.TaskFailed: execution failure
-- States.Permissions: insufficient privileges to execute code
+  - States.ALL : matches any error name
+  - States.Timeout: Task ran longer than TimeoutSeconds or no heartbeat received
+  - States.TaskFailed: execution failure
+  - States.Permissions: insufficient privileges to execute code
 - The state may report is own errors
+
+## Step Functions – Retry
+
+- Evaluated from top to bottom
+- **ErrorEquals**: match a specific kind of error
+- **IntervalSeconds**: initial delay before retrying
+- **BackoffRate**: multiple the delay after each retry
+- **MaxAttempts**: default to 3, set to 0 for never retried
+- When max attempts are reached, the Catch kicks in
+
+## Step Functions – Catch
+
+- Evaluated from top to bottom
+- ErrorEquals: match a specific kind of error
+- Next: State to send to
+- ResultPath
+  - A path that determines what input is sent to the state specified in the Next field.
+
+## Step Function – ResultPath
+
+<img src="./images/result.png" width="600" height="350" alt="Transfer Acceleration"/>
+
+> Include the error in the input
 
 ## Step Functions – Wait for Task Token
 
 - Allows you to pause Step Functions during a Task until a Task Token is returned
-- Task might wait for other AWS ser vices, human approval, 3rd party integration, call legacy systems…
+- Task might wait for other AWS services, human approval, 3rd party integration, call legacy systems…
 - Append .waitForTaskToken to the Resource field to tell Step Functions to wait for the Task Token to be returned
 - Task will pause until it receives that Task Token back with a SendTaskSuccess or SendTaskFailure API call
 
@@ -61,8 +91,8 @@
 - Activity Worker poll for a Task using GetActivityTask API
 - After Activity Worker completes its work, it sends a response of its success/failure using SendTaskSuccess or SendTaskFailure
 - To keep the Task active:
-- Configure how long a task can wait by setting TimeoutSeconds
-- Periodically send a heartbeat from your Activity Worker using SendTaskHeartBeat within the time you set in HeartBeatSeconds
+  - Configure how long a task can wait by setting TimeoutSeconds
+  - Periodically send a heartbeat from your Activity Worker using SendTaskHeartBeat within the time you set in HeartBeatSeconds
 - By configuring a long TimeoutSeconds and actively sending a heartbeat, Activity Task can wait up to 1 year
 
 ## AWS AppSync - Overview
@@ -161,33 +191,17 @@
   - Session Token
   - Expiration date
 
-## IAM Best Practices – General
+## Advanced IAM - Authorization Model Evaluation of Policies, simplified
 
-- Never use Root Credentials, enable MFA for Root Account
-- Grant Least Privilege
-  - Each Group / User / Role should only have the minimum level of permission it needs
-  - Never grant a policy with “\*” access to a service
-  - Monitor API calls made by a user in CloudTrail (especially Denied ones)
-- Never ever ever store IAM key credentials on any machine but a personal computer or on-premise server
-- On premise server best practice is to call STS to obtain temporary security credentials
+<img src="./images/deny.png" width="600" height="200" alt="Transfer Acceleration"/>
 
-## IAM Best Practices – IAM Roles
-
-- EC2 machines should have their own roles
-- Lambda functions should have their own roles
-- ECS Tasks should have their own roles (ECS_ENABLE_TASK_IAM_ROLE=true)
-- CodeBuild should have its own service role
-- Create a least-privileged role for any service that requires it
-- Create a role per application / lambda function (do not reuse roles)
-
-## IAM Best Practices – Cross Account Access
-
-- Define an IAM Role for another account to access
-- Define which accounts can access this IAM Role
-- Use AWS STS (Security Token Service) to retrieve credentials and impersonate the IAM Role you have access to (AssumeRole API)
-- Temporar y credentials can be valid between 15 minutes to 1 hour
+1.  If there’s an explicit DENY, end decision and DENY
+2.  If there’s an ALLOW, end decision with ALLOW
+3.  Else DENY
 
 ## IAM Policies & S3 Bucket Policies
+
+<img src="./images/bucket.png" width="600" height="200" alt="Transfer Acceleration"/>
 
 - IAM Policies are attached to users, roles, groups
 - S3 Bucket Policies are attached to buckets
